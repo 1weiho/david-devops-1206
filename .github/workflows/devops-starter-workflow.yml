@@ -5,15 +5,14 @@ on:
       - master
 
 env:
-  AZURE_WEBAPP_NAME: "david-devops-1206"    # set this to your application's name
+  AZURE_WEBAPP_NAME: "sonarqube-templete"    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: "Application"      # set this to the path to your web app project, defaults to the repository root
   PYTHON_VERSION: '3.7.5'                       # set this to the python version to use
-  RESOURCEGROUPNAME: "david-devops-1206-rg"
-  LOCATION: "South Central US"
-  HOSTINGPLANNAME: "david-devops-1206-plan"
-  APPINSIGHTLOCATION: "South Central US"
+  RESOURCEGROUPNAME: "sonarqube-templete-rg"
+  LOCATION: "Japan East"
+  HOSTINGPLANNAME: "sonarqube-templete-plan"
+  APPINSIGHTLOCATION: "Japan East"
   SKU: "S1 Standard"
-  SONAR_HOST_URL: "http://20.249.78.177"
 
 jobs:
   Build:
@@ -35,13 +34,6 @@ jobs:
       run: |
         mkdir testresults
         pip install pytest && pytest Tests/unit_tests --junitxml=./testresults/test-results.xml && pip install pycmd && py.cleanup Tests/
-    
-    - uses: action/checkout@v2
-      with:
-        fetch-depth: 0
-    - uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     # Uploading unit test results to artifact store
     - name: Upload unit test results to Artifact
@@ -152,7 +144,7 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
-
+        
     # Run functional tests
     - name: Run Functional tests
       continue-on-error: false
